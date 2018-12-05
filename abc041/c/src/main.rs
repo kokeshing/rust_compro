@@ -1,4 +1,3 @@
-
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -48,10 +47,32 @@ macro_rules! read_value {
     };
 }
 
+use std::cmp::Ordering;
+#[derive(Eq, PartialEq, Clone, Debug)]
+pub struct Rev<T>(pub T);
+
+impl<T: PartialOrd> PartialOrd for Rev<T> {
+    fn partial_cmp(&self, other: &Rev<T>) -> Option<Ordering> {
+        other.0.partial_cmp(&self.0)
+    }
+}
+
+impl<T: Ord> Ord for Rev<T> {
+    fn cmp(&self, other: &Rev<T>) -> Ordering {
+        other.0.cmp(&self.0)
+    }
+}
+
 fn main() {
     input!{
         n: usize,
         a: [usize; n],
     }
 
+    let mut a_i: Vec<(usize, usize)> = a.into_iter().zip(1..).collect();
+    a_i.sort_by_key(|t| Rev(t.0));
+
+    for (_, i) in a_i{
+        println!("{}", i);
+    }
 }
