@@ -72,7 +72,7 @@ fn main() {
     let mut a_i: Vec<(usize, usize)> = a.into_iter().zip(1..).collect();
     a_i.sort_by_key(|t| Rev(t.0));
 
-    for (_, i) in a_i{
+    for (_, i) in a_i {
         println!("{}", i);
     }
 }
