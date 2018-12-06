@@ -1,4 +1,4 @@
-
+use std::io::{stdout, Write, BufWriter};
 macro_rules! input {
     (source = $s:expr, $($r:tt)*) => {
         let mut iter = $s.split_whitespace();
@@ -52,6 +52,9 @@ fn main() {
     input!{
         n: usize,
     }
-    println!("Hello, world!");
-    println!("{}", n);
+
+    let out = stdout();
+    let mut out = BufWriter::new(out.lock());
+
+    writeln!(out, "{}", n).unwrap();
 }

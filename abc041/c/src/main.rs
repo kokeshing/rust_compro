@@ -47,6 +47,8 @@ macro_rules! read_value {
     };
 }
 
+use std::io::{stdout, Write, BufWriter};
+
 use std::cmp::Ordering;
 #[derive(Eq, PartialEq, Clone, Debug)]
 pub struct Rev<T>(pub T);
@@ -72,7 +74,10 @@ fn main() {
     let mut a_i: Vec<(usize, usize)> = a.into_iter().zip(1..).collect();
     a_i.sort_by_key(|t| Rev(t.0));
 
+    let out = stdout();
+    let mut out = BufWriter::new(out.lock());
+
     for (_, i) in a_i {
-        println!("{}", i);
+        writeln!(out, "{}", i).unwrap();
     }
 }
