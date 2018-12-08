@@ -21,11 +21,6 @@ macro_rules! input_inner {
     ($iter:expr, ) => {};
 
     ($iter:expr, $var:ident : $t:tt $($r:tt)*) => {
-        let $var = read_value!($iter, $t);
-        input_inner!{$iter $($r)*}
-    };
-
-    ($iter:expr, mut $var:ident : $t:tt $($r:tt)*) => {
         let mut $var = read_value!($iter, $t);
         input_inner!{$iter $($r)*}
     };
@@ -56,10 +51,14 @@ macro_rules! read_value {
 fn main() {
     input!{
         n: usize,
+        k: usize,
+        h: [usize; n],
     }
+
+    h.sort();
+    let ans = h.windows(k).map(|v| v.last().unwrap() - v.first().unwrap()).min().unwrap();
 
     let out = stdout();
     let mut out = BufWriter::new(out.lock());
-
-    writeln!(out, "{}", n).unwrap();
+    writeln!(out, "{}", ans).unwrap();
 }

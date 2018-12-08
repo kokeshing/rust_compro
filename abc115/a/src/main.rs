@@ -24,11 +24,6 @@ macro_rules! input_inner {
         let $var = read_value!($iter, $t);
         input_inner!{$iter $($r)*}
     };
-
-    ($iter:expr, mut $var:ident : $t:tt $($r:tt)*) => {
-        let mut $var = read_value!($iter, $t);
-        input_inner!{$iter $($r)*}
-    };
 }
 
 macro_rules! read_value {
@@ -61,5 +56,11 @@ fn main() {
     let out = stdout();
     let mut out = BufWriter::new(out.lock());
 
-    writeln!(out, "{}", n).unwrap();
+    match n {
+        25 => writeln!(out, "Christmas").unwrap(),
+        24 => writeln!(out, "Christmas Eve").unwrap(),
+        23 => writeln!(out, "Christmas Eve Eve").unwrap(),
+        22 => writeln!(out, "Christmas Eve Eve Eve").unwrap(),
+        _  => writeln!(out, "Christmas").unwrap(),
+    }
 }

@@ -23,6 +23,11 @@ macro_rules! input_inner {
         let $var = read_value!($iter, $t);
         input_inner!{$iter $($r)*}
     };
+
+    ($iter:expr, mut $var:ident : $t:tt $($r:tt)*) => {
+        let mut $var = read_value!($iter, $t);
+        input_inner!{$iter $($r)*}
+    };
 }
 
 macro_rules! read_value {
@@ -49,8 +54,11 @@ macro_rules! read_value {
 
 fn main() {
     input!{
-        n: usize,
+        mut n: usize,
+        mut a: [usize; n],
     }
-    println!("Hello, world!");
-    println!("{}", n);
+
+    a.sort();
+
+    println!("{:?}", a);
 }

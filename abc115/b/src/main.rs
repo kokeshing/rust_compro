@@ -24,11 +24,6 @@ macro_rules! input_inner {
         let $var = read_value!($iter, $t);
         input_inner!{$iter $($r)*}
     };
-
-    ($iter:expr, mut $var:ident : $t:tt $($r:tt)*) => {
-        let mut $var = read_value!($iter, $t);
-        input_inner!{$iter $($r)*}
-    };
 }
 
 macro_rules! read_value {
@@ -56,10 +51,14 @@ macro_rules! read_value {
 fn main() {
     input!{
         n: usize,
+        p: [usize; n],
     }
+
+    let max = p.iter().max().unwrap();
+    let sum : usize = p.iter().sum();
 
     let out = stdout();
     let mut out = BufWriter::new(out.lock());
 
-    writeln!(out, "{}", n).unwrap();
+    writeln!(out, "{}", sum - max / 2).unwrap();
 }

@@ -24,11 +24,6 @@ macro_rules! input_inner {
         let $var = read_value!($iter, $t);
         input_inner!{$iter $($r)*}
     };
-
-    ($iter:expr, mut $var:ident : $t:tt $($r:tt)*) => {
-        let mut $var = read_value!($iter, $t);
-        input_inner!{$iter $($r)*}
-    };
 }
 
 macro_rules! read_value {
@@ -53,13 +48,41 @@ macro_rules! read_value {
     };
 }
 
+fn mk_revel_barger(level : usize) -> Vec<usize> {
+    if level == 1 {
+        return vec!0, 1, 1, 1, 0];
+    }
+
+    let mut ans = vec![0];
+    let mut level_1 = mk_revel_barger(level - 1);
+    let mut level_1_cp: Vec<usize> = level_1.iter().map(|x| x.clone()).collect();
+
+    ans.append(&mut level_1_cp);
+    ans.append(&mut vec![1]);
+    ans.append(&mut level_1);
+    ans.append(&mut vec![0]);
+
+    return ans;
+}
+
 fn main() {
     input!{
         n: usize,
+        x: usize,
+    }
+
+    let mut barger = mk_revel_barger(n);
+    println!("{}", mk_revel_barger(5));
+    barger.reverse();
+    let mut ans: u64 = 0;
+    for i in 0..x {
+        if barger[i] == 1 {
+            ans += 1;
+        }
     }
 
     let out = stdout();
     let mut out = BufWriter::new(out.lock());
 
-    writeln!(out, "{}", n).unwrap();
+    writeln!(out, "{}", ans).unwrap();
 }
