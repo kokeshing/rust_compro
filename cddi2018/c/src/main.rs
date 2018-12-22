@@ -53,9 +53,9 @@ macro_rules! read_value {
     };
 }
 
-fn trivial_division(n: u64) -> Vec<u64> {
+fn trivial_division(n: usize) -> Vec<usize> {
     let mut result = n;
-    for i in 2..((n as f64).sqrt() as u64)+1 {
+    for i in 2..((n as f64).sqrt() as usize)+1 {
         if n % i == 0 {
             result = i;
             break;
@@ -81,19 +81,16 @@ fn main() {
         p: usize,
     }
 
-    let sosus = trivial_division(p as u64);
-    let unique: HashSet<u64> = sosus.clone().into_iter().collect();
+    let sosus = trivial_division(p);
+    let unique: HashSet<usize> = sosus.clone().into_iter().collect();
 
-    let mut ans: u64 = 1;
+    let mut ans = 1;
     for sosu in unique {
-        let kosu: u64 = (sosus.iter().filter(|&&e| e == sosu).count() / n) as u64;
-        if kosu > 0 {
-            ans = ans * sosu.pow(kosu as u32);
-        }
+        let kosu = sosus.iter().filter(|&&e| e == sosu).count() / n;
+        ans = ans * sosu.pow(kosu as u32);
     }
 
     let out = stdout();
     let mut out = BufWriter::new(out.lock());
-
     writeln!(out, "{}", ans).unwrap();
 }
