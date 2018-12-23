@@ -1,0 +1,6 @@
+[package]
+name = "miller_rabin_primality_test"
+version = "0.1.0"
+authors = ["kokeshing <kou7cdb1a@gmail.com>"]
+
+[dependencies]
